@@ -1,0 +1,9 @@
+sql/
+public/*
+!.gitignore
+!wp-content/
+public/wp-content/*
+!public/wp-content/plugins/
+public/wp-content/plugins/*
+!public/wp-content/plugins/sunset-premium-theme/
+node_modules/
