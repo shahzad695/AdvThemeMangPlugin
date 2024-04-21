@@ -5,5 +5,5 @@ public/*
 public/wp-content/*
 !public/wp-content/plugins/
 public/wp-content/plugins/*
-!public/wp-content/plugins/sunset-premium-theme/
+!public/wp-content/plugins/advThemeMang/
 node_modules/
