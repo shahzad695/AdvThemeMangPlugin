@@ -21,25 +21,40 @@ if(!defined('ABSPATH')){
 
 class AdvThemeMangPlugin {
     function __construct() {
-        add_action('init', [$this,'customPostType']);
+        
+
     }
+    function register() {
+        add_action('admin_enqueue_scripts', [$this,'enque']);
+    }
+       
     function activate(){
-        $this->customPostType();
-        flush_rewrite_rules();
+        add_action('init', [$this,'customPostType']);
+       require_once plugin_dir_path(__FILE__) . 'inc/advThemeMangActivate.php';
+       advThemeMangActivate::activate();
 
     }
     function deactivate(){
-        flush_rewrite_rules();
+        require_once plugin_dir_path(__FILE__) . 'inc/advThemeMangDeactivate.php';
+        advThemeMangDeactivate::deactivate();
+
+    
     }
 
     function customPostType(){
         register_post_type('book', ['public'=>true,'label'=>'Books']);
-}
+    }
+    function enque() {
+        
+        wp_enqueue_style('mystyle', plugins_url('/assets/mystyle.css', __FILE__));
+        wp_enqueue_script('myscript', plugins_url('/assets/myscript.js', __FILE__),[]);
+    }
 }
 
 if(class_exists('AdvThemeMangPlugin')){
 
     $advThemeMangPlugin = new AdvThemeMangPlugin();
+    $advThemeMangPlugin->register();
 }
 
 register_activation_hook(__FILE__, [$advThemeMangPlugin,'activate']);
