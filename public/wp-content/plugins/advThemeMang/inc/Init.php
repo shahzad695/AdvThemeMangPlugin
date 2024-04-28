@@ -6,15 +6,16 @@ class Init{
         return[
             Pages\Admin::class,
             Base\Enqueue::class,
+            Base\SettingsLinks::class,
         ];
     }
     public static  function register_services() {
         foreach (self::get_services() as $class){
             $service = new $class();
-            $service->register();
-            // if(method_exists($service,'register')){
-                
-            // }
+            
+            if(method_exists($service,'register')){
+                $service->register();
+            }
         }
        
     }
@@ -39,7 +40,7 @@ class Init{
 //     function register() {
 //         
 //         
-//         add_filter("plugin_action_links_$this->pluginName", [$this,'settingsLink']);
+//         
 //     }
        
 //     function activate(){
@@ -59,11 +60,7 @@ class Init{
 //     }
 //   
 //     
-//     function settingsLink($link) {
-//         $settings='<a href="admin.php?page=advThemeMang">Settings</a>';
-//         array_push($link,$settings);
-//         return $link;
-//     }
+//     
 // }
 
 // if(class_exists('AdvThemeMangPlugin')){

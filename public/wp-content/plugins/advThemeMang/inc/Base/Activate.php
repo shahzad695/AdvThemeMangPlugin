@@ -1,6 +1,6 @@
 <?php
 
-namespace Inc;
+namespace Inc\Base;
 class Activate {
     static function activate() {
     
