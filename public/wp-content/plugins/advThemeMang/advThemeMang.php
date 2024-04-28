@@ -18,7 +18,13 @@ Text Domain: advance-theme-manager
 if(!defined('ABSPATH')){
     die;
 }
+if(file_exists(dirname(__FILE__). '/vendor/autoload.php')){
+    require_once dirname(__FILE__) .'/vendor/autoload.php';
+}
 
+use Inc\Activate;
+use Inc\Deactivate;
+use Inc\admin\AdminPages;
 class AdvThemeMangPlugin {
     public $pluginName;
     function __construct() {
@@ -34,13 +40,12 @@ class AdvThemeMangPlugin {
        
     function activate(){
         add_action('init', [$this,'customPostType']);
-       require_once plugin_dir_path(__FILE__) . 'inc/advThemeMangActivate.php';
-       advThemeMangActivate::activate();
+       Activate::activate();
 
     }
     function deactivate(){
-        require_once plugin_dir_path(__FILE__) . 'inc/advThemeMangDeactivate.php';
-        advThemeMangDeactivate::deactivate();
+        
+       Deactivate::deactivate();
 
     
     }
@@ -55,6 +60,7 @@ class AdvThemeMangPlugin {
     }
     function admin_pages() {
         add_menu_page('Advance Theme Manager', 'advThemeMang', 'manage_options', 'advThemeMang', [$this,'adminIndex'], 'dashicons-store', 110);
+
     }
     function adminIndex() {
         require_once plugin_dir_path(__FILE__) . 'temp/admin.php';
