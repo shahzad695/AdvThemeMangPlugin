@@ -1,13 +1,8 @@
 {
   "name": "nbdl/adv-theme-mang",
-  "description": "advance Theme Manager plugin",
+  "description": "Advance Theme Manager Plugin",
   "type": "project",
   "license": "GLP",
-  "autoload": {
-    "psr-4": {
-      "Inc\\": "inc/"
-    }
-  },
   "authors": [
     {
       "name": "Shahzad Ahmad",
@@ -15,5 +10,10 @@
     }
   ],
   "minimum-stability": "dev",
-  "require": {}
+  "require": {},
+  "autoload": {
+    "psr-4": {
+      "Inc\\": "./inc"
+    }
+  }
 }
