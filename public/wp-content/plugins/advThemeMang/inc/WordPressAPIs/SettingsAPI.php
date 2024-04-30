@@ -5,6 +5,7 @@ namespace Inc\WordPressAPIs;
 class SettingsAPI 
 {
     public $admin_pages = array();
+    public $admin_subpages = array();
     function register() 
     {
         
@@ -20,12 +21,24 @@ class SettingsAPI
         return $this;
 
     }
+    
+    function addSubPages(array $subpages)
+    {
+        $this->admin_subpages = $subpages;
+        return $this;
+
+    }
     function addAdminMenu() 
     {
         
         foreach ($this->admin_pages as $page)
         {
         add_menu_page($page['page_title'], $page['menu_title'], $page['capability'], $page['menu_slug'], $page['call_back'], $page['icon_url'], $page['position']);
+        }
+
+        foreach ($this->admin_subpages as $subpage)
+        {
+        add_submenu_page($subpage['parent_slug'],$subpage['page_title'], $subpage['menu_title'], $subpage['capability'], $subpage['menu_slug'], $subpage['call_back'], );
         }
     }
 }
