@@ -3,21 +3,24 @@
 namespace Inc\Pages;
 
 use Inc\WordPressAPIs\SettingsAPI;
+use Inc\WordPressAPIs\Callbacks\AdminCallbacks;
 
 class Admin
 {
     public $pages = array();
     public $subpages = array();
     public $settings;
+    public $admin_callbacks;
     function __construct() 
     {
         $this->settings = new SettingsAPI();
+        $this->admin_callbacks = new AdminCallbacks();
         $this->pages = [[
             'page_title'  =>  'Advance Theme Manager', 
             'menu_title'  =>  'advThemeMang',
             'capability'  => 'manage_options', 
             'menu_slug'   =>  'advThemeMang', 
-            'call_back'   =>  function (){echo '<h1>Advanace Theme Manager</h1>';},
+            'call_back'   =>  array($this->admin_callbacks, 'adminDashboard'),
             'icon_url'    =>  'dashicons-store', 
             'position'    =>   110
         ]];
@@ -36,7 +39,7 @@ class Admin
             'menu_title'  =>  'CPT',
             'capability'  =>  'manage_options', 
             'menu_slug'   =>  'advThemeMang_CPT', 
-            'call_back'   =>  function (){echo '<h1>CPT Manager</h1>';}, 
+            'call_back'   =>  array($this->admin_callbacks, 'cptManager'), 
         ]];
         
     }

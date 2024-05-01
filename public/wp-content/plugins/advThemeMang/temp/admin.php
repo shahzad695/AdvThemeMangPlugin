@@ -1,1 +1,1 @@
-<h1>Advance Theme Manager</h1>
+<h1>Advance Theme Manage Plugins</h1>

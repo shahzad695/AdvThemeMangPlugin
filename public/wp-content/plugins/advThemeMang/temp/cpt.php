@@ -1,0 +1,1 @@
+<h1>CPT Manager plugin</h1>
