@@ -16,10 +16,15 @@ class SettingsAPI
         {
         add_action('admin_menu', [$this, 'addAdminMenu']);
         }
+        if(!empty($this->settings))
+        {
+            add_action('admin_init', [$this, 'registerSettings']);
+        }
     }
 
     function addPages(array $pages)
     {
+        
         $this->admin_pages = $pages;
         return $this;
 
@@ -45,40 +50,43 @@ class SettingsAPI
         }
     }
 
-    function setSettings(array $settings)
+    function setSettings(array $set)
     {
-        $this->settings = $settings;
+        
+        $this->settings = $set;
+        
         return $this;
 
     }
 
-    function setSections(array $sections)
+    function setSections(array $sec)
     {
-        $this->sections = $sections;
+        $this->sections = $sec;
         return $this;
 
     }
 
-    function setFields(array $fields)
+    function setFields(array $fie)
     {
-        $this->fields = $fields;
+        $this->fields = $fie;
         return $this;
 
     }
     function registerSettings()
     {
-        foreach ($this->$settings as $subpage)
+        
+        foreach ($this->settings as $setting)
         {
             register_setting($setting['option_group'], $setting['option_name'], $setting['callback']);
         }
 
-        foreach ($this->$sections as $section)
+        foreach ($this->sections as $section)
         {
-            add_settings_section(['id'], ['title'], ['callback'], ['page']);
+            add_settings_section($section['id'], $section['title'], $section['callback'], $section['page']);
             
         }
 
-        foreach ($this->$fields as $field)
+        foreach ($this->fields as $field)
         {
             add_settings_field($field['id'], $field['title'], $field['callback'], $field['page'], $field['section'], $field['args']);
 

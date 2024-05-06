@@ -9,11 +9,14 @@ class Admin
 {
     public $pages = array();
     public $subpages = array();
-    public $settings;
+    public $settings = array();
+    public $sections = array();
+    public $fields = array();
+    public $settingsAPI;
     public $admin_callbacks;
     function __construct() 
     {
-        $this->settings = new SettingsAPI();
+        $this->settingsAPI = new SettingsAPI();
         $this->admin_callbacks = new AdminCallbacks();
         $this->pages = [[
             'page_title'  =>  'Advance Theme Manager', 
@@ -41,11 +44,39 @@ class Admin
             'menu_slug'   =>  'advThemeMang_CPT', 
             'call_back'   =>  array($this->admin_callbacks, 'cptManager'), 
         ]];
+
+        $this->settings = [[
+            'option_group'  =>  'admin_Settings_group', 
+            'option_name'   =>  'first_name', 
+            'callback'     =>  array($this->admin_callbacks, 'settings'), 
+        ]];
+        $this->sections = [[
+            'id'            =>  'admin_settings_section', 
+            'title'         =>  'Settings section', 
+            'callback'     =>  array($this->admin_callbacks, 'sections'), 
+            'page'          => 'advThemeMang',
+        ]];
+        $this->fields = [[
+            'id'            =>  'first_name', 
+            'title'         =>  'First Name', 
+            'callback'     =>  array($this->admin_callbacks, 'fields'), 
+            'page'          => 'advThemeMang',
+            'section'       => 'admin_settings_section',
+            'args'          =>  [
+                                    'label' => 'first_name',
+                                    'class' => 'admin_settings_input',
+                                ]
+        ]];
+
         
     }
 
     function register() {
-        $this->settings->addPages($this->pages)->addSubPages($this->subpages)->register();
+        // var_dump[$this->pages];
+        $this->settingsAPI->setSettings($this->settings);
+        $this->settingsAPI->setSections($this->sections);
+        $this->settingsAPI->setFields($this->fields);
+        $this->settingsAPI->addPages($this->pages)->addSubPages($this->subpages)->register();
     }
     // function admin_pages() {
     //      add_menu_page('Advance Theme Manager', 'advThemeMang', 'manage_options', 'advThemeMang', [$this,'adminIndex'], 'dashicons-store', 110);
