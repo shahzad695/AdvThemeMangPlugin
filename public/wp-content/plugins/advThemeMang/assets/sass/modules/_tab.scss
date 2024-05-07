@@ -1,5 +1,26 @@
 .tab {
   &__items {
     display: flex;
+    gap: 1rem;
+    text-decoration: none;
+  }
+  &__item {
+    margin-top: 1rem;
+    margin-bottom: 0;
+  }
+  &__item_link {
+    padding: 0.8rem 1.2rem;
+  }
+  &__item_link--active {
+    color: $dark_grey;
+    background-color: $darker_white;
+  }
+  &__paine {
+    background-color: $darker_white;
+    display: none;
+    padding: 0.8rem 1.2rem;
+  }
+  &__paine--active {
+    display: block;
   }
 }

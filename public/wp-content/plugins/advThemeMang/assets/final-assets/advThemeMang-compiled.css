@@ -1,3 +1,3 @@
-*{box-sizing:border-box;margin:0;padding:0}html{font-size:62.5%}body{font-family:"Raleway",sans-serif;color:gray;overflow-x:hidden}.tab__items{display:flex}
+*{box-sizing:border-box;margin:0;padding:0}html{font-size:62.5%}body{font-family:"Raleway",sans-serif;color:gray;overflow-x:hidden}.tab__items{display:flex;gap:1rem;text-decoration:none}.tab__item{margin-top:1rem;margin-bottom:0}.tab__item_link{padding:.8rem 1.2rem}.tab__item_link--active{color:#4f4f4f;background-color:#fff}.tab__paine{background-color:#fff;display:none;padding:.8rem 1.2rem}.tab__paine--active{display:block}.link:visited,.link:link{text-decoration:none;display:inline-block}.link:hover,.link:focus,.link:active{box-shadow:none}
 
 /*# sourceMappingURL=advThemeMang-compiled.css.map*/

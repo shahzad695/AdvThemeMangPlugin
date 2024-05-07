@@ -1,0 +1,13 @@
+.link {
+  &:visited,
+  &:link {
+    text-decoration: none;
+    display: inline-block;
+  }
+  &:hover,
+  &:focus,
+  &:active {
+    // outline: none;
+    box-shadow: none;
+  }
+}
