@@ -1,0 +1,88 @@
+.toggle{
+    &__checkbox_input[type="checkbox"] {
+        display: none;
+        
+    }
+    &__background_container{
+        position: relative;
+        display: flex;
+        align-items: center;
+        height: 2.2rem;
+        width: 5rem;
+        border-radius: 1rem;
+        background-color: rgba(241, 103, 103, 0.97);
+        transition: all .3s ease-in-out;
+        
+       
+        
+    }
+    &__label{
+        position: absolute;
+        height: 2rem;
+        width: 2rem;
+        border-radius: 50%;
+        background-color: rgb(246, 194, 181);
+        top: 1px;
+        left: 2px;
+        cursor: pointer;
+        transition: all .3s ease-in-out;
+        &::before{
+            position: absolute;
+            content: '';
+            height: 1rem;
+            width: .1rem;
+            background-color:  rgba(169, 37, 4, 0.788);
+            bottom:5px;
+            left: 10px;
+            transform: rotate(45deg);
+
+        }
+        &::after{
+            position: absolute;
+            content: '';
+            height: .1rem;
+            width: 1rem;
+            background-color: rgba(169, 41, 9, 0.788);
+            bottom:9px;
+            left: 6px;
+            transform: rotate(45deg);
+        }
+    }
+    // &__checkbox_input[type="checkbox"]~&__background_container .toggle__label{
+        
+    // }
+    
+        &__checkbox_input[type="checkbox"]:checked~&__background_container{
+        background-color: rgba(94, 195, 5, 0.775);
+        
+    }
+    &__checkbox_input[type="checkbox"]:checked~&__background_container .toggle__label{
+        background-color: rgb(211, 240, 186);
+        transform: rotate(360deg);
+        top: .5px;
+        left: 28px;
+        
+        &::before{
+            position: absolute;
+            content: '';
+            height: .9rem;
+            width: .1rem;
+            background-color:  rgba(7, 144, 27, 0.788);
+            bottom:5px;
+            left: 10px;
+            transform: rotate(45deg);
+
+        }
+        &::after{
+            position: absolute;
+            content: '';
+            height: .1rem;
+            width: 0.4rem;
+            background-color:  rgba(7, 144, 27, 0.788);
+
+            bottom:7px;
+            left: 5px;
+            transform: rotate(45deg);
+        }
+    }
+}

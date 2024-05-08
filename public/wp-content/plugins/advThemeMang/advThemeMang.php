@@ -11,32 +11,41 @@ Author URI: https://github.com/shahzad695
 License: GPLv2 or later
 Text Domain: advance-theme-manager
 
+ */
 
-*/
-
-
-if(!defined('ABSPATH')){
+if (!defined('ABSPATH')) {
     die;
 }
-if(file_exists(dirname(__FILE__). '/vendor/autoload.php')){
-    require_once dirname(__FILE__) .'/vendor/autoload.php';
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
 define('advThemeMang_PLUGIN_PATH', plugin_dir_path(__FILE__));
-define('advThemeMang_PLUGIN_URL',  plugin_dir_url(__FILE__));
-define('advThemeMang_PLUGIN',  plugin_basename(__FILE__));
+define('advThemeMang_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('advThemeMang_PLUGIN', plugin_basename(__FILE__));
+define('advThemeMang_ADMINSETTINGSMANAGER', [
+    'cpt_manager' => 'Activate CPT Manager',
+    'taxonomy_manager' => 'Activate Taxonomy Manager',
+    'media_widget' => 'Activate Media widget',
+    'gallery_manager' => 'Activate Gallery Manager',
+    'testimonial_manager' => 'Activate Tetimonial Manager',
+    'login_manager' => 'Activate Login Manager',
+    'membership_manager' => 'Activate Membership Manager',
+    'chat_manager' => 'Activate Chat Manager',
 
-function advThemeMang_activate(){
+]);
+function advThemeMang_activate()
+{
     Inc\Base\Activate::activate();
 }
 register_activation_hook(__FILE__, 'advThemeMang_activate');
 
-function advThemeMang_deactivate() {
+function advThemeMang_deactivate()
+{
     Inc\Base\Deactivate::deactivate();
 }
 register_deactivation_hook(__FILE__, 'advThemeMang_deactivate');
 
-
-if(class_exists('Inc\\Init')){
+if (class_exists('Inc\\Init')) {
     Inc\Init::register_services();
 }

@@ -47,147 +47,38 @@ class Admin
                 'call_back' => array($this->admin_callbacks, 'cptManager'),
             ]];
 
-        $this->settings = [
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'cpt_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'taxonomy_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'media_widget',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'gallery_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'testimonial_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'login_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'membershi_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
-            [
-                'option_group' => 'admin_manager_group',
-                'option_name' => 'chat_manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ],
+        foreach (advThemeMang_ADMINSETTINGSMANAGER as $key => $value) {
 
-        ];
+            $this->settings[] = [
+                'option_group' => 'admin_manager_group',
+                'option_name' => $key,
+                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
+            ];
+
+        }
+
         $this->sections = [[
             'id' => 'admin_settings_section',
             'title' => 'Admin Settings Manager',
             'callback' => array($this->admin_manager_callbacks, 'adminSettingSectionManager'),
             'page' => 'advThemeMang',
         ]];
-        $this->fields = [
-            [
-                'id' => 'cpt_manager',
-                'title' => 'Activate CPT Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'cpt_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
 
-            [
-                'id' => 'taxonomy_manager',
-                'title' => 'Activate Taxonomy Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'taxonomy_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
-            [
-                'id' => 'media_widget',
-                'title' => 'Activate Media widget',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'media_widget',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
-            [
-                'id' => 'gallery_manager',
-                'title' => 'Activate Gallery Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'gallery_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
-            [
-                'id' => 'testimonial_manager',
-                'title' => 'Activate Tetimonial Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'testimonial_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
-            [
-                'id' => 'login_manager',
-                'title' => 'Activate Login Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'login_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
-            [
-                'id' => 'membership_manager',
-                'title' => 'Activate Membership Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'membership_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
-            [
-                'id' => 'chat_manager',
-                'title' => 'Activate Chat Manager',
-                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
-                'page' => 'advThemeMang',
-                'section' => 'admin_settings_section',
-                'args' => [
-                    'label_for' => 'chat_manager',
-                    'class' => 'tab__checkbox_input',
-                ],
-            ],
+        foreach (advThemeMang_ADMINSETTINGSMANAGER as $key => $value) {
 
-        ];
+            $this->fields[] = [
+                'id' => $key,
+                'title' => $value,
+                'callback' => array($this->admin_manager_callbacks, 'adminSettingFieldsManager'),
+                'page' => 'advThemeMang',
+                'section' => 'admin_settings_section',
+                'args' => [
+                    'label_for' => $key,
+                    'class' => 'toggle__checkbox_input',
+                ],
+            ];
+
+        }
 
     }
 
