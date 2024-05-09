@@ -12,9 +12,6 @@
         border-radius: 1rem;
         background-color: rgba(241, 103, 103, 0.97);
         transition: all .3s ease-in-out;
-        
-       
-        
     }
     &__label{
         position: absolute;
@@ -35,8 +32,8 @@
             bottom:5px;
             left: 10px;
             transform: rotate(45deg);
-
         }
+
         &::after{
             position: absolute;
             content: '';
@@ -48,11 +45,8 @@
             transform: rotate(45deg);
         }
     }
-    // &__checkbox_input[type="checkbox"]~&__background_container .toggle__label{
-        
-    // }
     
-        &__checkbox_input[type="checkbox"]:checked~&__background_container{
+    &__checkbox_input[type="checkbox"]:checked~&__background_container{
         background-color: rgba(94, 195, 5, 0.775);
         
     }
@@ -71,15 +65,14 @@
             bottom:5px;
             left: 10px;
             transform: rotate(45deg);
-
         }
+        
         &::after{
             position: absolute;
             content: '';
             height: .1rem;
             width: 0.4rem;
             background-color:  rgba(7, 144, 27, 0.788);
-
             bottom:7px;
             left: 5px;
             transform: rotate(45deg);

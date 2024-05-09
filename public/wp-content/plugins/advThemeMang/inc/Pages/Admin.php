@@ -47,15 +47,11 @@ class Admin
                 'call_back' => array($this->admin_callbacks, 'cptManager'),
             ]];
 
-        foreach (advThemeMang_ADMINSETTINGSMANAGER as $key => $value) {
-
-            $this->settings[] = [
-                'option_group' => 'admin_manager_group',
-                'option_name' => $key,
-                'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
-            ];
-
-        }
+        $this->settings[] = [
+            'option_group' => 'admin_manager_group',
+            'option_name' => 'advThemeMang',
+            'callback' => array($this->admin_manager_callbacks, 'adminManagerInputSanitizer'),
+        ];
 
         $this->sections = [[
             'id' => 'admin_settings_section',
@@ -75,6 +71,7 @@ class Admin
                 'args' => [
                     'label_for' => $key,
                     'class' => 'toggle__checkbox_input',
+                    'option_name' => 'advThemeMang',
                 ],
             ];
 
