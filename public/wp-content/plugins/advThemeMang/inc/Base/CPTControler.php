@@ -9,6 +9,7 @@ class CPTControler
     public $subpages = array();
     public $settingsAPI;
     public $admin_callbacks;
+    public $custom_post_types = array();
     function register()
     {
         $checkbox = get_option('advThemeMang');
@@ -16,12 +17,14 @@ class CPTControler
         if (!$checked) {
             return;
         }
-
-        add_action('init', [$this, 'cptActivator']);
         $this->settingsAPI = new SettingsAPI();
         $this->admin_callbacks = new AdminCallbacks();
 
+        // $this->storeCustomPostTypes();
         $this->subpageGenrator();
+        if (!empty($this->custom_post_types)) {
+            add_action('init', [$this, 'registerCPT']);
+        }
 
     }
     function subpageGenrator()
@@ -40,17 +43,41 @@ class CPTControler
 
     }
 
-    function cptActivator()
+    function storeCustomPostTypes()
     {
-        register_post_type('advThemeMag_products', [
-            'labels' => [
+        $this->custom_post_types = [
+            [
+                'post_type' => 'advThemeMag_products',
                 'name' => 'Products',
                 'singular_name' => 'Product',
-            ],
-            'public' => true,
-            'has_archive' => true,
+                'public' => true,
+                'has_archive' => true,
 
-        ]);
+            ],
+            [
+                'post_type' => 'advThemeMag_comics',
+                'name' => 'Comics',
+                'singular_name' => 'Comic',
+                'public' => true,
+                'has_archive' => true,
+            ],
+        ];
+    }
+
+    function registerCPT()
+    {
+        foreach ($this->custom_post_types as $custom_post_type) {
+
+            register_post_type($custom_post_type['post_type'], [
+                'labels' => [
+                    'name' => $custom_post_type['name'],
+                    'singular_name' => $custom_post_type['singular_name'],
+                ],
+                'public' => $custom_post_type['public'],
+                'has_archive' => $custom_post_type['has_archive'],
+
+            ]);
+        }
     }
 
 }
