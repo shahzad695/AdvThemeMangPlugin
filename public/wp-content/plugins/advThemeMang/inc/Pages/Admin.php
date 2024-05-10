@@ -38,14 +38,7 @@ class Admin
                 'menu_slug' => 'advThemeMang',
                 'call_back' => $this->pages[0]['call_back'],
             ],
-            [
-                'parent_slug' => 'advThemeMang',
-                'page_title' => 'CPT Manager',
-                'menu_title' => 'CPT',
-                'capability' => 'manage_options',
-                'menu_slug' => 'advThemeMang_CPT',
-                'call_back' => array($this->admin_callbacks, 'cptManager'),
-            ]];
+        ];
 
         $this->settings[] = [
             'option_group' => 'admin_manager_group',

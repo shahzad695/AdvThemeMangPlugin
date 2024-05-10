@@ -1,23 +1,28 @@
 <?php
 
 namespace Inc;
-class Init{
-    static function get_services(){
-        return[
+
+class Init
+{
+    public static function get_services()
+    {
+        return [
             Pages\Admin::class,
             Base\Enqueue::class,
             Base\SettingsLinks::class,
+            Base\CPTControler::class,
         ];
     }
-    public static  function register_services() {
-        foreach (self::get_services() as $class){
+    public static function register_services()
+    {
+        foreach (self::get_services() as $class) {
             $service = new $class();
-            
-            if(method_exists($service,'register')){
+
+            if (method_exists($service, 'register')) {
                 $service->register();
             }
         }
-       
+
     }
 
     // public static function instanciate($class) {
@@ -34,33 +39,31 @@ class Init{
 //     public $pluginName;
 //     function __construct() {
 //         $this->pluginName = plugin_basename(__FILE__);
-        
 
 //     }
 //     function register() {
-//         
-//         
-//         
+//
+//
+//
 //     }
-       
+
 //     function activate(){
 //         add_action('init', [$this,'customPostType']);
 //        Activate::activate();
 
 //     }
 //     function deactivate(){
-        
+
 //        Deactivate::deactivate();
 
-    
 //     }
 
 //     function customPostType(){
 //         register_post_type('book', ['public'=>true,'label'=>'Books']);
 //     }
-//   
-//     
-//     
+//
+//
+//
 // }
 
 // if(class_exists('AdvThemeMangPlugin')){
