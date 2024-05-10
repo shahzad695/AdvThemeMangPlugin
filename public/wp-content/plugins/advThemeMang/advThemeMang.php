@@ -11,66 +11,41 @@ Author URI: https://github.com/shahzad695
 License: GPLv2 or later
 Text Domain: advance-theme-manager
 
+ */
 
-*/
-
-
-if(!defined('ABSPATH')){
+if (!defined('ABSPATH')) {
     die;
 }
-
-class AdvThemeMangPlugin {
-    public $pluginName;
-    function __construct() {
-        $this->pluginName = plugin_basename(__FILE__);
-        
-
-    }
-    function register() {
-        add_action('admin_enqueue_scripts', [$this,'enque']);
-        add_action('admin_menu', [$this,'admin_pages']);
-        add_filter("plugin_action_links_$this->pluginName", [$this,'settingsLink']);
-    }
-       
-    function activate(){
-        add_action('init', [$this,'customPostType']);
-       require_once plugin_dir_path(__FILE__) . 'inc/advThemeMangActivate.php';
-       advThemeMangActivate::activate();
-
-    }
-    function deactivate(){
-        require_once plugin_dir_path(__FILE__) . 'inc/advThemeMangDeactivate.php';
-        advThemeMangDeactivate::deactivate();
-
-    
-    }
-
-    function customPostType(){
-        register_post_type('book', ['public'=>true,'label'=>'Books']);
-    }
-    function enque() {
-        
-        wp_enqueue_style('mystyle', plugins_url('/assets/mystyle.css', __FILE__));
-        wp_enqueue_script('myscript', plugins_url('/assets/myscript.js', __FILE__),[]);
-    }
-    function admin_pages() {
-        add_menu_page('Advance Theme Manager', 'advThemeMang', 'manage_options', 'advThemeMang', [$this,'adminIndex'], 'dashicons-store', 110);
-    }
-    function adminIndex() {
-        require_once plugin_dir_path(__FILE__) . 'temp/admin.php';
-    }
-    function settingsLink($link) {
-        $settings='<a href="admin.php?page=advThemeMang">Settings</a>';
-        array_push($link,$settings);
-        return $link;
-    }
+if (file_exists(dirname(__FILE__) . '/vendor/autoload.php')) {
+    require_once dirname(__FILE__) . '/vendor/autoload.php';
 }
 
-if(class_exists('AdvThemeMangPlugin')){
+define('advThemeMang_PLUGIN_PATH', plugin_dir_path(__FILE__));
+define('advThemeMang_PLUGIN_URL', plugin_dir_url(__FILE__));
+define('advThemeMang_PLUGIN', plugin_basename(__FILE__));
+define('advThemeMang_ADMINSETTINGSMANAGER', [
+    'cpt_manager' => 'Activate CPT Manager',
+    'taxonomy_manager' => 'Activate Taxonomy Manager',
+    'media_widget' => 'Activate Media widget',
+    'gallery_manager' => 'Activate Gallery Manager',
+    'testimonial_manager' => 'Activate Tetimonial Manager',
+    'login_manager' => 'Activate Login Manager',
+    'membership_manager' => 'Activate Membership Manager',
+    'chat_manager' => 'Activate Chat Manager',
 
-    $advThemeMangPlugin = new AdvThemeMangPlugin();
-    $advThemeMangPlugin->register();
+]);
+function advThemeMang_activate()
+{
+    Inc\Base\Activate::activate();
 }
+register_activation_hook(__FILE__, 'advThemeMang_activate');
 
-register_activation_hook(__FILE__, [$advThemeMangPlugin,'activate']);
-register_deactivation_hook(__FILE__, [$advThemeMangPlugin,'deactivate']);
+function advThemeMang_deactivate()
+{
+    Inc\Base\Deactivate::deactivate();
+}
+register_deactivation_hook(__FILE__, 'advThemeMang_deactivate');
+
+if (class_exists('Inc\\Init')) {
+    Inc\Init::register_services();
+}

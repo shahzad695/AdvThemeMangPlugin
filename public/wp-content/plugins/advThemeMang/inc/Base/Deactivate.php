@@ -1,5 +1,7 @@
 <?php
-class advThemeMangDeactivate {
+
+namespace Inc\Base;
+class Deactivate {
     static function deactivate() {
         flush_rewrite_rules();
     }
