@@ -3,8 +3,9 @@ namespace Inc\WordPressAPIs\Callbacks;
 
 class AdminManagerCallbacks
 {
-    function adminManagerInputSanitizer($input)
+    function adminManagernIputSanitizer($input)
     {
+        var_dump($input);
         $output = [];
         foreach (advThemeMang_ADMINSETTINGSMANAGER as $key => $value) {
             $output[$key] = isset($input[$key]) ? true : false;

@@ -14,6 +14,7 @@ class Activate
         }
         $option_name = [];
         update_option('advThemeMang', $option_name);
+        update_option('advThemeMang_cpt', $option_name);
     }
 
 }
