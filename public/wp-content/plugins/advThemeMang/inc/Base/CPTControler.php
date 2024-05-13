@@ -28,9 +28,9 @@ class CPTControler
 
         $this->storeCustomPostTypes();
         $this->subpageGenrator();
-        // if (!empty($this->custom_post_types)) {
-        add_action('init', [$this, 'registerCPT']);
-        // }
+        if (!empty($this->custom_post_types)) {
+            add_action('init', [$this, 'registerCPT']);
+        }
 
     }
     function subpageGenrator()
@@ -60,7 +60,7 @@ class CPTControler
 
         $this->fields = [[
             'id' => 'post_type',
-            'title' => 'Post Type',
+            'title' => 'Custom Post Type ID',
             'callback' => array($this->cpt_callbacks, 'CPTTextFieldManager'),
             'page' => 'advThemeMang_cpt',
             'section' => 'admin_cpt_section',
@@ -69,17 +69,6 @@ class CPTControler
                 'option_name' => 'advThemeMang_cpt',
                 'placeholder' => 'eg.Product',
             ]],
-            [
-                'id' => 'plural_name',
-                'title' => 'Plural Name',
-                'callback' => array($this->cpt_callbacks, 'CPTTextFieldManager'),
-                'page' => 'advThemeMang_cpt',
-                'section' => 'admin_cpt_section',
-                'args' => [
-                    'label_for' => 'plural_name',
-                    'option_name' => 'advThemeMang_cpt',
-                    'placeholder' => 'eg.Products',
-                ]],
             [
                 'id' => 'singular_name',
                 'title' => 'Singular Name',
@@ -90,6 +79,17 @@ class CPTControler
                     'label_for' => 'singular_name',
                     'option_name' => 'advThemeMang_cpt',
                     'placeholder' => 'eg.Product',
+                ]],
+            [
+                'id' => 'plural_name',
+                'title' => 'Plural Name',
+                'callback' => array($this->cpt_callbacks, 'CPTTextFieldManager'),
+                'page' => 'advThemeMang_cpt',
+                'section' => 'admin_cpt_section',
+                'args' => [
+                    'label_for' => 'plural_name',
+                    'option_name' => 'advThemeMang_cpt',
+                    'placeholder' => 'eg.Products',
                 ]],
             [
                 'id' => 'has_archive',
@@ -124,9 +124,7 @@ class CPTControler
     function storeCustomPostTypes()
     {
 
-        $post_types = get_option('advThemeMang_cpt');
-        // var_dump($post_types);
-        // die();
+        $post_types = get_option('advThemeMang_cpt') ?: array();
 
         foreach ($post_types as $post_type) {
             // var_dump($post_type);
@@ -136,8 +134,8 @@ class CPTControler
                 'post_type' => $post_type['post_type'],
                 'name' => $post_type['plural_name'],
                 'singular_name' => $post_type['singular_name'],
-                'public' => $post_type['public'],
-                'has_archive' => $post_type['has_archive'],
+                'publi' => (isset($post_type['public']) ? true : false),
+                'has_archiv' => (isset($post_type['has_archive']) ? true : false),
 
             ];
 
@@ -152,8 +150,8 @@ class CPTControler
 
             $name = $custom_post_type['name'];
             $singular = $custom_post_type['singular_name'];
-            $public = ($custom_post_type['public'] ? true : false);
-            $has_archive = ($custom_post_type['has_archive'] ? true : false);
+            $public = $custom_post_type['publi'];
+            $has_archive = $custom_post_type['has_archiv'];
 
             register_post_type($singular, [
                 'labels' => [

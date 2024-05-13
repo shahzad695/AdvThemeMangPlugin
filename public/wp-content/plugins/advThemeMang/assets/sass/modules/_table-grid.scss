@@ -1,0 +1,26 @@
+.table_grid{
+    display: grid;
+    grid-template: 3rem/1fr 1fr 1fr 1fr 1fr 1fr;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    background-color: $black;
+    // justify-content: center;
+
+        &__item{
+            text-align: center;
+            align-self: center;
+            background-color: $lightest_grey;
+            color: $dark_grey;
+    
+            padding:0.6rem;
+        }
+        &__item:nth-child(-n +6) {
+            background-color: $dark_grey;
+            color: $darker_white;
+            
+            // text-align: center;
+        }
+        
+    
+
+}

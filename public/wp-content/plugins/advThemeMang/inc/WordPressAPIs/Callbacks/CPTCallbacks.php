@@ -10,29 +10,29 @@ class CPTCallbacks
     }
     function cptInputSanitizer($input)
     {
-        $output = array();
         $output = get_option('advThemeMang_cpt');
         $array_name = $input['post_type'];
 
-        if ($output) {
-            foreach ($output as $key => $value) {
+        if (count($output) === 0) {
 
-                if ($array_name === $key) {
-                    $output[$key] = $input;
-                    // var_dump($output);
-                    // die();
-                } else {
-                    $output[$array_name] = $input;
-                    // var_dump($output);
-                    // die();
+            $stored[$array_name] = $input;
 
-                }
+            return $stored;
+        }
+
+        foreach ($output as $key => $value) {
+
+            if ($array_name === $key) {
+
+                $output[$key] = $input;
+                // var_dump($output);
+                // die();
+            } else {
+                $output[$array_name] = $input;
+                // var_dump($output);
+                // die();
 
             }
-        } else {
-            // var_dump($array_name);
-            // die();
-            return $input;
 
         }
 

@@ -8,13 +8,14 @@ class Activate
     {
 
         flush_rewrite_rules();
-
-        if (get_option('advThemeMang')) {
-            return;
-        }
         $option_name = [];
-        update_option('advThemeMang', $option_name);
-        update_option('advThemeMang_cpt', $option_name);
+        if (!get_option('advThemeMang')) {
+            update_option('advThemeMang', $option_name);
+        }
+        if (!get_option('advThemeMang_cpt')) {
+            update_option('advThemeMang_cpt', $option_name);
+        }
+
     }
 
 }
