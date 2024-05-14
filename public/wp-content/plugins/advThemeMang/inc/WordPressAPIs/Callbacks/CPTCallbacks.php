@@ -8,44 +8,45 @@ class CPTCallbacks
     {
         echo 'Generate the required Custom Post Types';
     }
+
     function cptInputSanitizer($input)
     {
         $output = get_option('advThemeMang_cpt');
+
+        if (isset($_POST['remove'])) {
+            unset($output[$_POST["remove"]]);
+            return $output;
+        }
+
         $array_name = $input['post_type'];
 
         if (count($output) === 0) {
-
-            $stored[$array_name] = $input;
-
-            return $stored;
+            $output[$array_name] = $input;
+            return $output;
         }
 
         foreach ($output as $key => $value) {
-
             if ($array_name === $key) {
-
                 $output[$key] = $input;
-                // var_dump($output);
-                // die();
             } else {
                 $output[$array_name] = $input;
-                // var_dump($output);
-                // die();
-
             }
-
         }
-
         return $output;
-
     }
+
     function CPTTextFieldManager($args)
     {
         $name = $args['label_for'];
         $option_name = $args['option_name'];
         $option = get_option($option_name);
-        // $value = $option[$name];
-        echo '<input type="text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="" placeholder="' . $args['placeholder'] . '"/>';
+        $value = '';
+        if (isset($_POST['edit_post'])) {
+            var_dump($option);
+            die();
+            $value = $option['edit_post'];
+        }
+        echo '<input type="text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '"/>';
     }
     function CPTCheckboxManager($args)
     {
