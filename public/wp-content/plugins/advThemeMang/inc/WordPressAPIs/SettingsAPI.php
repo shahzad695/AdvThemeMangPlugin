@@ -73,6 +73,7 @@ class SettingsAPI
 
         foreach ($this->settings as $setting) {
             register_setting($setting['option_group'], $setting['option_name'], $setting['callback']);
+
         }
 
         foreach ($this->sections as $section) {

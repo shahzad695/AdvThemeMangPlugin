@@ -8,9 +8,11 @@ export default class AdminTabs {
   }
   // Event listeners
   events() {
+    addEventListener('load', function(event) { PR.prettyPrint(); }, false);
     this.tabs.forEach((tabPaine) => {
       console.log(tabPaine);
       tabPaine.addEventListener("click", this.switchTabsHandler);
+
     });
   }
   //  Event handlers
