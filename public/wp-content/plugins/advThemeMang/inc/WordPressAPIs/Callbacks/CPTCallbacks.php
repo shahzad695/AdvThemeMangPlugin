@@ -39,12 +39,13 @@ class CPTCallbacks
     {
         $name = $args['label_for'];
         $option_name = $args['option_name'];
-        $option = get_option($option_name);
+
         $value = '';
-        if (isset($_POST['edit_post'])) {
-            var_dump($option);
-            die();
-            $value = $option['edit_post'];
+
+        if (isset($_POST['edit-post'])) {
+            $cpt = $_POST['edit-post'];
+            $option = get_option($option_name);
+            $value = $option[$_POST['edit-post']][$name];
         }
         echo '<input type="text" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="' . $value . '" placeholder="' . $args['placeholder'] . '"/>';
     }
@@ -53,8 +54,14 @@ class CPTCallbacks
         $name = $args['label_for'];
         $class = $args['class'];
         $option_name = $args['option_name'];
-        $checkbox = get_option($option_name);
-        $checked = isset($checkbox[$name]) ? (($checkbox[$name]) ? true : false) : false;
+        $checked = false;
+        if (isset($_POST['edit-post'])) {
+            $option = get_option($option_name);
+            // $value = $option[$_POST['edit-post']][$name];
+            $checked = isset($option[$_POST['edit-post']][$name]) ? (($option[$_POST['edit-post']][$name]) ? true : false) : false;
+        }
+        // $checkbox = get_option($option_name);
+        // $checked = isset($checkbox[$name]) ? (($checkbox[$name]) ? true : false) : false;
         echo '<div class="container"><input type="checkbox" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="1" class="' . $class . '" ' . ($checked ? ' checked' : '')
             . '/><div class="toggle__background_container"><label for="' . $name . '" class="toggle__label"></label></div></div>';
     }
