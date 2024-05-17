@@ -15,4 +15,9 @@ class AdminCallbacks
         return require_once advThemeMang_PLUGIN_PATH . 'temp/cpt.php';
     }
 
+    function taxonomyManager()
+    {
+        return require_once advThemeMang_PLUGIN_PATH . 'temp/taxonomy.php';
+    }
+
 }
