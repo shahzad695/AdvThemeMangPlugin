@@ -18,7 +18,7 @@ class TaxonomyCallbacks
             return $output;
         }
 
-        $array_name = $input['post_type'];
+        $array_name = $input['taxonomy'];
 
         if (count($output) === 0) {
             $output[$array_name] = $input;
@@ -63,6 +63,33 @@ class TaxonomyCallbacks
         // $checked = isset($checkbox[$name]) ? (($checkbox[$name]) ? true : false) : false;
         echo '<div class="container"><input type="checkbox" id="' . $name . '" name="' . $option_name . '[' . $name . ']" value="1" class="' . $class . '" ' . ($checked ? ' checked' : '')
             . '/><div class="toggle__background_container"><label for="' . $name . '" class="toggle__label"></label></div></div>';
+    }
+
+    function TaxPostTypeCheckboxManager($args)
+    {
+        $name = $args['label_for'];
+        $class = $args['class'];
+        $option_name = $args['option_name'];
+        $checked = false;
+        if (isset($_POST['edit-taxonomy'])) {
+            $option = get_option($option_name);
+
+        }
+
+        $post_types = get_post_types(['public' => true]);
+        $output = '';
+        foreach ($post_types as $post) {
+            if (isset($_POST['edit-taxonomy'])) {
+
+                $checked = isset($option[$_POST['edit-taxonomy']][$name][$post]) ? (($option[$_POST['edit-taxonomy']][$name][$post]) ? true : false) : false;
+
+            }
+
+            $output .= '<div class="toggle toggle--mbtm"><input type="checkbox" id="' . $post . '" name="' . $option_name . '[' . $name . '][' . $post . ']" value="1" class="' . $class . '" ' . ($checked ? ' checked' : '')
+                . '/><div class="toggle__background_container"><label for="' . $post . '" class="toggle__label"></label></div><strong>' . $post . '</strong></div>';
+        }
+
+        echo $output;
     }
 
 }

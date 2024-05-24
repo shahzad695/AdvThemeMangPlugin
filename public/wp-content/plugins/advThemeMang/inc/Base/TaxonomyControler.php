@@ -113,6 +113,18 @@ class TaxonomyControler
                     'class' => 'toggle__checkbox_input',
                     'option_name' => 'advThemeMang_tax',
                 ]],
+
+            [
+                'id' => 'post_types',
+                'title' => 'Post Types',
+                'callback' => array($this->taxonomy_callbacks, 'TaxPostTypeCheckboxManager'),
+                'page' => 'advThemeMang_tax',
+                'section' => 'admin_tax_section',
+                'args' => [
+                    'label_for' => 'post_types',
+                    'class' => 'toggle__checkbox_input',
+                    'option_name' => 'advThemeMang_tax',
+                ]],
         ];
         $this->settingsAPI->setSettings($this->settings);
         $this->settingsAPI->setSections($this->sections);
@@ -135,6 +147,7 @@ class TaxonomyControler
                 'singular_name' => $taxonomy['singular_name'],
                 'public' => (isset($taxonomy['public']) ? true : false),
                 'hierarchical' => (isset($taxonomy['hierarchical']) ? true : false),
+                'post_types' => (isset($taxonomy['post_types']) ? $taxonomy['post_types'] : null),
 
             ];
 
@@ -146,12 +159,12 @@ class TaxonomyControler
     function registerTaxonomy()
     {
         foreach ($this->taxonomies as $taxonomy) {
-            var_dump($taxonomy['singular_name']);
 
             $taxonomy_name = $taxonomy['taxonomy'];
             $singular = $taxonomy['singular_name'];
             $public = $taxonomy['public'];
             $hierarchical = $taxonomy['hierarchical'];
+            $post_types = $taxonomy['post_types'];
 
             // Register Custom Taxonomy
 
@@ -191,8 +204,11 @@ class TaxonomyControler
                 'show_in_nav_menus' => true,
                 'show_tagcloud' => true,
                 'rewrite' => $rewrite,
+                'post_types' => $post_types,
+
             );
-            register_taxonomy('' . $singular . '', array('post'), $args);
+            $posts = ($args['post_types']) ? array_keys($args['post_types']) : null;
+            register_taxonomy('' . $singular . '', $posts, $args);
 
         }
     }

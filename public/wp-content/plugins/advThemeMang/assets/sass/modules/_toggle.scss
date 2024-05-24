@@ -1,4 +1,9 @@
 .toggle{
+    display: flex;
+    gap: 1rem;
+    &--mbtm{
+        margin-bottom: 1rem;
+    }
     &__checkbox_input[type="checkbox"] {
         display: none;
         
