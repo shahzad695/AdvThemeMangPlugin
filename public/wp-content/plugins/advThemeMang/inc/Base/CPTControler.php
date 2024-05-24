@@ -128,13 +128,14 @@ class CPTControler
 
         foreach ($post_types as $post_type) {
             // var_dump($post_type);
+            // die();
 
             $this->custom_post_types[] = [
 
                 'post_type' => $post_type['post_type'],
                 'name' => $post_type['plural_name'],
                 'singular_name' => $post_type['singular_name'],
-                'publi' => (isset($post_type['public']) ? true : false),
+                'public' => (isset($post_type['public']) ? true : false),
                 'has_archiv' => (isset($post_type['has_archive']) ? true : false),
 
             ];
@@ -150,7 +151,7 @@ class CPTControler
 
             $name = $custom_post_type['name'];
             $singular = $custom_post_type['singular_name'];
-            $public = $custom_post_type['publi'];
+            $public = $custom_post_type['public'];
             $has_archive = $custom_post_type['has_archiv'];
 
             register_post_type($singular, [

@@ -15,6 +15,9 @@ class Activate
         if (!get_option('advThemeMang_cpt')) {
             update_option('advThemeMang_cpt', $option_name);
         }
+        if (!get_option('advThemeMang_tax')) {
+            update_option('advThemeMang_tax', $option_name);
+        }
 
     }
 

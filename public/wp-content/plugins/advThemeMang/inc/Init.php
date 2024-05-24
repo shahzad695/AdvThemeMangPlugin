@@ -11,6 +11,7 @@ class Init
             Base\Enqueue::class,
             Base\SettingsLinks::class,
             Base\CPTControler::class,
+            Base\TaxonomyControler::class,
         ];
     }
     public static function register_services()
