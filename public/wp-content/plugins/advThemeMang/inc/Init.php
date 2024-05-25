@@ -12,6 +12,7 @@ class Init
             Base\SettingsLinks::class,
             Base\CPTControler::class,
             Base\TaxonomyControler::class,
+            Base\WidgetControler::class,
         ];
     }
     public static function register_services()
