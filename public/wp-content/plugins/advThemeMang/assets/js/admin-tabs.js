@@ -8,22 +8,22 @@ export default class AdminTabs {
   }
   // Event listeners
   events() {
-    addEventListener('load', function(event) { PR.prettyPrint(); }, false);
+    // addEventListener('load', function(e) { PR.prettyPrint(); }, false);
     this.tabs.forEach((tabPaine) => {
       console.log(tabPaine);
       tabPaine.addEventListener("click", this.switchTabsHandler);
-
-    });
+      
+    })
   }
   //  Event handlers
-  switchTabsHandler(event) {
-    event.preventDefault();
+  switchTabsHandler(e){
+    e.preventDefault();
     const activeLink = document.querySelector(".tab__item_link--active");
     const activePaine = document.querySelector(".tab__paine--active");
     activePaine.classList.remove("tab__paine--active");
     activeLink.classList.remove("tab__item_link--active");
 
-    const clickedItem = event.target;
+    const clickedItem = e.target;
     const clickedTabId = clickedItem.getAttribute("href");
     console.log(clickedTabId);
     clickedItem.classList.add("tab__item_link--active");

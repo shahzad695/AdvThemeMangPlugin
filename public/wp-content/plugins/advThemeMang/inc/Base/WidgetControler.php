@@ -16,9 +16,7 @@ class WidgetControler
         if (!$checked) {
             return;
         }
-        if (function_exists('register_sidebar')) {
-            register_sidebar();
-        }
+
         $this->media_widget = new MediaWidget;
         $this->media_widget->register();
 
