@@ -1,10 +1,17 @@
 <?php
 namespace Inc\Base;
+use Inc\WordPressAPIs\Callbacks\TestimonialCallbacks;
+use Inc\WordPressAPIs\Callbacks\AdminCallbacks;
+use Inc\WordPressAPIs\SettingsAPI;
 
 
 
 class TestimonialControler
 {
+    public $settingsAPI;
+    public $admin_callbacks;
+    public $testimonial_callbacks;
+    public $subpages = [];
     public function register()
     {
         $checkbox = get_option('advThemeMang');
@@ -14,6 +21,9 @@ class TestimonialControler
         if (!$checked) {
             return;
         }
+        $this->settingsAPI = new SettingsAPI();
+        $this->admin_callbacks = new AdminCallbacks();
+        $this->testimonial_callbacks = new TestimonialCallbacks();
         
         add_action('init', [$this, 'registerTestimonial']);
         add_action('add_meta_boxes', [$this, 'addMetaBoxes']);
@@ -22,9 +32,25 @@ class TestimonialControler
     
         add_action('manage_testimonial_posts_custom_column', [$this, 'manageTestimonialColumns'], 10, 2);
         add_filter('manage_edit-testimonial_sortable_columns', [$this, 'makeTestimonialSortable']);
+        $this->subpageGenrator();
         
 
     }
+
+    public function subpageGenrator(){
+        $this->subpages =[[
+        'parent_slug' => 'edit.php?post_type=testimonial',
+        'page_title' => 'Testimonial Shortcodes',
+        'menu_title' => 'Shortcodes',
+        'capability' => 'manage_options',
+        'menu_slug' => 'advThemeMang_testimonials_shortcodes',
+        'call_back' => array($this->admin_callbacks, 'testimonalShortcodes'),
+        ]];
+
+        $this->settingsAPI->addSubPages($this->subpages)->register();
+        
+    }
+
     public function registerTestimonial()
     {
             $labels = array(
@@ -68,7 +94,6 @@ class TestimonialControler
                 'menu_position'      => null,
                 'menu_icon'          => 'dashicons-testimonial',
                 'supports'           => array( 'title', 'editor' ),
-                'taxonomies'         => array( 'category', 'post_tag' ),
                 'show_in_rest'       => false, // Enable Gutenberg editor
             );
         
@@ -79,46 +104,9 @@ class TestimonialControler
 
         public function addMetaBoxes()
         {
-            add_meta_box( 'advThemeMang_testimonial_options_metabox', 'Testimonial Options', [$this, 'advThemeMang_testimonial_options_metabox_callback'], 'Testimonial', 'normal', 'default' );
+            add_meta_box( 'advThemeMang_testimonial_options_metabox', 'Testimonial Options', [$this->testimonial_callbacks, 'advThemeMang_testimonial_options_metabox_callback'], 'Testimonial', 'normal', 'default' );
         }
-        public function  advThemeMang_testimonial_options_metabox_callback( $post )
-        {
-            
-            wp_nonce_field( 'advThemeMang_testimonial_options_metabox_nonce_id', 'advThemeMang_testimonial_options_metabox_nonce' );
-            $testimonial_options = get_post_meta( $post->ID, '_advThemeMang_testimonial_options_metabox_key', true );
-
-            $author_name = isset( $testimonial_options['author_name'] ) ? $testimonial_options['author_name'] : '';
-            $author_email = isset( $testimonial_options['author_email'] ) ? $testimonial_options['author_email'] : '';
-            $approved = isset( $testimonial_options['approved'] ) ? $testimonial_options['approved'] : false;
-            $featured = isset( $testimonial_options['featured'] ) ? $testimonial_options['featured'] : false;
-            
-                     
-           
-            ?>
-<p>
-    <label for="advThemeMang_author_name">Author Name</label>
-    <input type="text" name="advThemeMang_author_name" id="advThemeMang_author_name" value="<?php echo $author_name; ?>" />
-</p>
-<p>
-    <label for="advThemeMang_author_email">Author Email</label>
-    <input type="email" name="advThemeMang_author_email" id="advThemeMang_author_email" value="<?php echo $author_email; ?>" />
-</p>
-<div class="toggle">
-
-    <strong>Approved</strong><input type="checkbox" id="advThemeMang_approved" name="advThemeMang_approved" value="1"
-        class="toggle__checkbox_input" <?php echo $approved ? 'checked' : ''; ?> />
-    <div class="toggle__background_container"><label for="advThemeMang_approved" class="toggle__label"></label></div>
-</div>';
-<div class="toggle">
-
-    <strong>Featured</strong><input type="checkbox" id="advThemeMang_featured" name="advThemeMang_featured" value="1"
-        class="toggle__checkbox_input" <?php echo $featured ? 'checked' : ''; ?> />
-    <div class="toggle__background_container"><label for="advThemeMang_featured" class="toggle__label"></label></div>
-</div>';
-
-
-<?php
-        }
+       
 
      
         public function save_author_metabox( $post_id )
