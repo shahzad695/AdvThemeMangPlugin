@@ -13,6 +13,7 @@ class Init
             Base\CPTControler::class,
             Base\TaxonomyControler::class,
             Base\WidgetControler::class,
+            Base\TestimonialControler::class,
         ];
     }
     public static function register_services()
