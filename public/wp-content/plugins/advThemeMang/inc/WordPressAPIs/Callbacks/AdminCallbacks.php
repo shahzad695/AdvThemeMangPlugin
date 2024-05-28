@@ -19,5 +19,10 @@ class AdminCallbacks
     {
         return require_once advThemeMang_PLUGIN_PATH . 'temp/taxonomy.php';
     }
+    
+    public function testimonialManager()
+    {
+        return require_once advThemeMang_PLUGIN_PATH . 'temp/testimonialshortcodes.php';
+    }
 
 }

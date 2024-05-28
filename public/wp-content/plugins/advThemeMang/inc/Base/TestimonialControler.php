@@ -5,10 +5,7 @@ namespace Inc\Base;
 
 class TestimonialControler
 {
-
-
-
-    function register()
+    public function register()
     {
         $checkbox = get_option('advThemeMang');
         $checked = isset($checkbox['testimonial_manager']) ? ($checkbox['testimonial_manager'] ? true : false) : false;
@@ -21,12 +18,15 @@ class TestimonialControler
         add_action('init', [$this, 'registerTestimonial']);
         add_action('add_meta_boxes', [$this, 'addMetaBoxes']);
         add_action('save_post', [$this, 'save_author_metabox']);
+        add_action('manage_testimonial_posts_columns', [$this, 'addTestimonialColumns']);
+    
+        add_action('manage_testimonial_posts_custom_column', [$this, 'manageTestimonialColumns'], 10, 2);
+        add_filter('manage_edit-testimonial_sortable_columns', [$this, 'makeTestimonialSortable']);
+        
 
     }
-    function registerTestimonial()
+    public function registerTestimonial()
     {
-        
-            // Register Custom Testimonial
             $labels = array(
                 'name'                  => _x( 'Testimonials', 'Post type general name', 'advance-theme-manager' ),
                 'singular_name'         => _x( 'Testimonial', 'Post type singular name', 'advance-theme-manager' ),
@@ -72,16 +72,16 @@ class TestimonialControler
                 'show_in_rest'       => false, // Enable Gutenberg editor
             );
         
-            register_post_type( 'Testimonial', $args );
+            register_post_type( 'testimonial', $args );
         }
         
 
 
-        function addMetaBoxes()
+        public function addMetaBoxes()
         {
             add_meta_box( 'advThemeMang_testimonial_options_metabox', 'Testimonial Options', [$this, 'advThemeMang_testimonial_options_metabox_callback'], 'Testimonial', 'normal', 'default' );
         }
-        function advThemeMang_testimonial_options_metabox_callback( $post )
+        public function  advThemeMang_testimonial_options_metabox_callback( $post )
         {
             
             wp_nonce_field( 'advThemeMang_testimonial_options_metabox_nonce_id', 'advThemeMang_testimonial_options_metabox_nonce' );
@@ -89,8 +89,8 @@ class TestimonialControler
 
             $author_name = isset( $testimonial_options['author_name'] ) ? $testimonial_options['author_name'] : '';
             $author_email = isset( $testimonial_options['author_email'] ) ? $testimonial_options['author_email'] : '';
-            $approved = isset( $testimonial_options['approved'] ) ? $testimonial_options['approved'] : '';
-            $featured = isset( $testimonial_options['featured'] ) ? $testimonial_options['featured'] : '';
+            $approved = isset( $testimonial_options['approved'] ) ? $testimonial_options['approved'] : false;
+            $featured = isset( $testimonial_options['featured'] ) ? $testimonial_options['featured'] : false;
             
                      
            
@@ -121,7 +121,7 @@ class TestimonialControler
         }
 
      
-        function save_author_metabox( $post_id )
+        public function save_author_metabox( $post_id )
         {
             
             
@@ -144,5 +144,50 @@ class TestimonialControler
                 'featured' => isset($_POST['advThemeMang_featured']) ? $_POST['advThemeMang_featured'] : 0,
             ];
             update_post_meta( $post_id, '_advThemeMang_testimonial_options_metabox_key', $data);
+        }
+
+        public function addTestimonialColumns( $columns)
+        {
+            
+            $title =$columns['title'];
+            $category =$columns['categories'];
+            $tags=$columns['tags'];
+            $date=$columns['date'];
+            unset($columns['title'],$columns['tags'],$columns['date'],$columns['categories']);
+            $columns['name']='Author Name';
+            $columns['title']=$title;
+            $columns['Approved']='Approved';
+            $columns['Featured']='Featured';
+            $columns['date']=$date;
+            return $columns;
+
+        }
+        public function manageTestimonialColumns($column,$post_id){
+           
+            $testimonial_options = get_post_meta( $post_id, '_advThemeMang_testimonial_options_metabox_key', true );
+
+            $author_name = isset( $testimonial_options['author_name'] ) ? $testimonial_options['author_name'] : '';
+            $author_email = isset( $testimonial_options['author_email'] ) ? $testimonial_options['author_email'] : '';
+            $approved = isset( $testimonial_options['approved'] ) ? $testimonial_options['approved'] : false;
+            $featured = isset( $testimonial_options['featured'] ) ? $testimonial_options['featured'] : false;
+
+            switch ($column) {
+                case 'name':
+                    echo '<strong>'.$author_name.'</strong><br/><a href="mailto:'.$author_email.'">'.$author_email.'</a>';
+                    break;
+                case 'Approved':
+                    echo $approved ? 'Yes' : 'No';
+                    break;
+                case 'Featured':
+                    echo $featured ? 'Yes' : 'No';
+                    break;
+            }
+        }
+        public function makeTestimonialSortable($columns){
+
+            $columns['name']='Author Name';
+            $columns['Approved']='Approved';
+            $columns['Featured']='Featured';
+            return $columns;
         }
     }
