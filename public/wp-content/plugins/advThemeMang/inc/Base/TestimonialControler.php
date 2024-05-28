@@ -17,9 +17,10 @@ class TestimonialControler
         if (!$checked) {
             return;
         }
-        // var_dump('testimonial ran');
-        // die();
+        
         add_action('init', [$this, 'registerTestimonial']);
+        add_action('add_meta_boxes', [$this, 'addMetaBoxes']);
+        add_action('save_post', [$this, 'save_author_metabox']);
 
     }
     function registerTestimonial()
@@ -31,7 +32,7 @@ class TestimonialControler
                 'singular_name'         => _x( 'Testimonial', 'Post type singular name', 'advance-theme-manager' ),
                 'menu_name'             => _x( 'Testimonials', 'Admin Menu text', 'advance-theme-manager' ),
                 'name_admin_bar'        => _x( 'Testimonial', 'Add New on Toolbar', 'advance-theme-manager' ),
-                'add_new'               => __( 'Add New', 'advance-theme-manager' ),
+                'add_new'               => __( 'Add New Testimonial', 'advance-theme-manager' ),
                 'add_new_item'          => __( 'Add New Testimonial', 'advance-theme-manager' ),
                 'new_item'              => __( 'New Testimonial', 'advance-theme-manager' ),
                 'edit_item'             => __( 'Edit Testimonial', 'advance-theme-manager' ),
@@ -76,4 +77,38 @@ class TestimonialControler
         
 
 
-}
+        function addMetaBoxes()
+        {
+            add_meta_box( 'advThemeMang_author_name', 'Author', [$this, 'advThemeMang_author_name_callback'], 'Testimonial', 'normal', 'default' );
+        }
+        function advThemeMang_author_name_callback( $post )
+        {
+            
+            wp_nonce_field( 'advThemeMang_author_name_nonce_id', 'advThemeMang_author_name_nonce' );
+            $author_name= get_post_meta( $post->ID, '_advThemeMang_author_name_key', true );
+            ?>
+<p>
+    <label for="advThemeMang_author_name">Author Name</label>
+    <input type="text" name="advThemeMang_author_name" id="advThemeMang_author_name" value="<?php echo $author_name; ?>" />
+</p>
+<?php
+        }
+
+        function save_author_metabox( $post_id )
+        {
+            
+            
+            if ( ! isset( $_POST['advThemeMang_author_name_nonce'] ) || ! wp_verify_nonce( $_POST['advThemeMang_author_name_nonce'], 'advThemeMang_author_name_nonce_id' ) ) {
+                return;
+            }
+            if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+                return;
+            }
+            if ( ! current_user_can( 'edit_post', $post_id ) ) {
+                return;
+            }
+            if ( isset( $_POST['advThemeMang_author_name'] ) ) {
+                update_post_meta( $post_id, '_advThemeMang_author_name_key', sanitize_text_field( $_POST['advThemeMang_author_name'] ) );
+            }
+        }
+    }
