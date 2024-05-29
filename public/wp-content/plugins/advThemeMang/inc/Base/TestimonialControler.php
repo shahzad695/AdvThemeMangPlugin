@@ -40,8 +40,9 @@ class TestimonialControler
 
     public function testimonalForm(){
         ob_start();
+        echo '<link rel="stylesheet" href="'.advThemeMang_PLUGIN_URL .'assets/final-assets/form.css"></link>';
         require_once advThemeMang_PLUGIN_PATH . 'temp/testimonial-form.php';
-        require_once advThemeMang_PLUGIN_URL . 'assets/final-assets/advThemeMang-compiled.css';
+        echo '<script src="'.advThemeMang_PLUGIN_URL .'assets/final-assets/form.js"></script>';
         return ob_get_clean();
     }
 

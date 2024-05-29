@@ -5,15 +5,16 @@ const { watch } = require("fs");
 module.exports = {
   plugins: [
     new MiniCssExtractPlugin({
-      filename: "advThemeMang-compiled.css",
+      filename: "[name].css",
     }),
   ],
   mode: "production",
   entry: {
-    App: ["./assets/sass/advThemeMang.scss", "./assets/js/advThemeMang.js"],
+    'advThemeMang-compiled': ["./assets/sass/advThemeMang.scss", "./assets/js/advThemeMang.js"],
+    form: ["./assets/sass/form.scss", "./assets/js/form.js"],
   },
   output: {
-    filename: "advThemeMang-compiled.js",
+    filename: "[name].js",
     path: path.resolve(__dirname, "assets/final-assets/"),
   },
 
