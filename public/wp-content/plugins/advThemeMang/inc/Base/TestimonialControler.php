@@ -33,8 +33,16 @@ class TestimonialControler
         add_action('manage_testimonial_posts_custom_column', [$this, 'manageTestimonialColumns'], 10, 2);
         add_filter('manage_edit-testimonial_sortable_columns', [$this, 'makeTestimonialSortable']);
         $this->subpageGenrator();
+        add_shortcode('testimonial_form', [$this,'testimonalForm']);
         
 
+    }
+
+    public function testimonalForm(){
+        ob_start();
+        require_once advThemeMang_PLUGIN_PATH . 'temp/testimonial-form.php';
+        require_once advThemeMang_PLUGIN_URL . 'assets/final-assets/advThemeMang-compiled.css';
+        return ob_get_clean();
     }
 
     public function subpageGenrator(){
