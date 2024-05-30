@@ -14,7 +14,7 @@
     <div class="sunsetform__field-cont"><label for="message"></label> <textarea class="sunsetform__field sunsetform__field--input"
             id="message" name="message" rows="5" placeholder="Your Massage" maxlength="65525"></textarea>
         <!-- <small class="sunsetform__msg ">A Message is Required</small> -->
-        <span class="sunsetform__msg sunsetform__msg--invalid"></span>
+        <span class="sunsetform__msg sunsetform__msg--invalid sunsetform__msg--invalid--msg"></span>
     </div>
 
     <div class="sunsetform__field-cont"><button type="submit" class="sunsetform__field sunsetform__field--btn">Submit</button>
@@ -22,5 +22,6 @@
         <small class="sunsetform__msg sunsetform__msg--success">Message succesfully submitted</small>
         <small class="sunsetform__msg sunsetform__msg--failure">Unable to Submit Message try again latter</small>
     </div>
+    <!-- <input type="hidden" name="action" value="testimonial_form_submit"> -->
 
 </form>

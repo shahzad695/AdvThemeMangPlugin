@@ -34,10 +34,51 @@ class TestimonialControler
         add_filter('manage_edit-testimonial_sortable_columns', [$this, 'makeTestimonialSortable']);
         $this->subpageGenrator();
         add_shortcode('testimonial_form', [$this,'testimonalForm']);
-        
+        add_action('wp_ajax_testimonial_form_submit', [$this, 'testimonialAjaxFormSubmit']);
+        add_action('wp_ajax_nopriv_testimonial_form_submit', [$this, 'testimonialAjaxFormSubmit']);
 
     }
 
+    public function testimonialAjaxFormSubmit(){
+       
+        $name = sanitize_text_field($_POST['name']);
+        $email = sanitize_email($_POST['email']);
+        $message = sanitize_textarea_field($_POST['message']);
+      
+        $data = [
+            'author_name' => $name,
+            'author_email' =>$email,
+            'approved' => 0,
+            'featured' =>  0,
+        ];
+
+        $post =[
+            'post_title' => $name,
+            'post_content' => $message,
+            'post_status' => 'publish',
+            'post_type' => 'testimonial',
+            'meta_input' => [
+                '_advThemeMang_testimonial_options_metabox_key' => $data
+            ]
+            ];
+
+       $post_id = wp_insert_post($post);
+       $result;
+
+       if($post_id){
+        $result =[
+            'status' => 'success',
+            'post_id' => $post_id
+        ];
+       }else{
+       $result = [
+        'status' => 'failed',
+       ];
+    }
+       wp_send_json($result);
+       wp_die();
+
+    }
     public function testimonalForm(){
         ob_start();
         echo '<link rel="stylesheet" href="'.advThemeMang_PLUGIN_URL .'assets/final-assets/form.css"></link>';

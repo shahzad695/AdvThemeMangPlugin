@@ -53,14 +53,18 @@
     &__msg {
       display: none;
       color: red;
-      font-size: 1.2rem;
+      font-size: 0.8rem;
       padding: 0 0.5rem;
       text-align: left;
+      text-transform: uppercase;
       &--invalid::before {
         position: absolute;
-        top: -14;
-        left: 10;
+        top: 2.5rem;
+        left: 0.5rem;
         content: "This field is required";
+      }
+      &--invalid--msg::before {
+        top: 10.5rem;
       }
       &--progress {
         color: rgb(202, 249, 34);
