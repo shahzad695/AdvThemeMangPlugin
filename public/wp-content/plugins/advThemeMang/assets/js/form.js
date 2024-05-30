@@ -5,6 +5,7 @@ import axios from "axios";
     this.name = document.querySelector("#name");
     this.email = this.form.querySelector("#email");
     this.message = this.form.querySelector("#message");
+    this.nonce = this.form.querySelector("#nonce");
     this.inputField = document.querySelectorAll(".sunsetform__field--input");
     this.url = this.form.dataset.url;
     this.submit = this.form.querySelector(".sunsetform__btn");
@@ -37,7 +38,9 @@ import axios from "axios";
     let name = this.name.value;
     let email = this.email.value;
     let message = this.message.value;
+    let nonce = this.nonce.value;
     let emptyFeilds = 0;
+    console.log(nonce);
     this.inputField.forEach((input) => {
       if (input.value == "") {
         
@@ -54,6 +57,7 @@ import axios from "axios";
       name: name,
       email: email,
       message: message,
+      nonce: nonce,
       action: "testimonial_form_submit",
     });
     

@@ -22,6 +22,6 @@
         <small class="sunsetform__msg sunsetform__msg--success">Message succesfully submitted</small>
         <small class="sunsetform__msg sunsetform__msg--failure">Unable to Submit Message try again latter</small>
     </div>
-    <!-- <input type="hidden" name="action" value="testimonial_form_submit"> -->
+    <input type="hidden" id="nonce" name="nonce" value=<?php echo wp_create_nonce('testimonial_nonce')?>>
 
 </form>

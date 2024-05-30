@@ -41,6 +41,12 @@ class TestimonialControler
 
     public function testimonialAjaxFormSubmit(){
        
+   
+        if(!'DOING_AJAX'||!check_ajax_referer('testimonial_nonce', 'nonce')){
+            var_dump('checking ajax' );
+            die();
+            return $this->resetStatus('failure');
+        }
         $name = sanitize_text_field($_POST['name']);
         $email = sanitize_email($_POST['email']);
         $message = sanitize_textarea_field($_POST['message']);
@@ -53,7 +59,7 @@ class TestimonialControler
         ];
 
         $post =[
-            'post_title' => $name,
+            'post_title' => 'Testimonial from'.$name.'',
             'post_content' => $message,
             'post_status' => 'publish',
             'post_type' => 'testimonial',
@@ -66,18 +72,20 @@ class TestimonialControler
        $result;
 
        if($post_id){
-        $result =[
-            'status' => 'success',
-            'post_id' => $post_id
-        ];
+        return $this->resetStatus('success');
        }else{
-       $result = [
-        'status' => 'failed',
-       ];
+        return $this->resetStatus('failure');
     }
-       wp_send_json($result);
+       
        wp_die();
 
+    }
+    public function resetStatus($status) {
+        $result =[
+            'status' => $status,
+        ];
+        wp_send_json($result);
+        wp_die();
     }
     public function testimonalForm(){
         ob_start();
