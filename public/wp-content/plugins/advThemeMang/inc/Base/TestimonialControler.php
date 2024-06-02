@@ -36,15 +36,23 @@ class TestimonialControler
         add_shortcode('testimonial_form', [$this,'testimonalForm']);
         add_action('wp_ajax_testimonial_form_submit', [$this, 'testimonialAjaxFormSubmit']);
         add_action('wp_ajax_nopriv_testimonial_form_submit', [$this, 'testimonialAjaxFormSubmit']);
+        add_shortcode('testimonial_slide_Show', [$this,'testimonalSlideshow']);
 
+    }
+
+    public function testimonalSlideshow(){
+        ob_start();
+        echo '<link rel="stylesheet" href="'.advThemeMang_PLUGIN_URL .'assets/final-assets/slider.css"></link>';
+        require_once advThemeMang_PLUGIN_PATH . 'temp/testimonial-slideshow.php';
+        echo '<script src="'.advThemeMang_PLUGIN_URL .'assets/final-assets/slider.js"></script>';
+        return ob_get_clean();
     }
 
     public function testimonialAjaxFormSubmit(){
        
    
         if(!'DOING_AJAX'||!check_ajax_referer('testimonial_nonce', 'nonce')){
-            var_dump('checking ajax' );
-            die();
+            
             return $this->resetStatus('failure');
         }
         $name = sanitize_text_field($_POST['name']);
