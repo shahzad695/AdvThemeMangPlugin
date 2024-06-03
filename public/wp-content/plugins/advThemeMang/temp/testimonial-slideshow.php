@@ -18,11 +18,12 @@ $query = new WP_Query($args);
 // die();
 
 if ($query->have_posts()) {
-    echo '<ul>';
+    echo '<div class="slideshow"><ul class="slideshow__slides">';
     while($query->have_posts()) {
         $query->the_post();
-        echo '<li>'.get_the_title().'<p>'.get_the_content().'</p></li>';
+        $name = get_post_meta(get_the_ID(), '_advThemeMang_testimonial_options_metabox_key', true)['author_name'];
+        echo '<li class="slideshow__slide"><div>'. get_the_content().'</div><div>'.$name.'</div></li>';
     }
 
-    echo '</ul>';
+    echo '</ul><button class="slideshow__button slideshow__button--prev">&lt;</ ><button class="slideshow__button slideshow__button--next">&gt;</button></div>';
 }

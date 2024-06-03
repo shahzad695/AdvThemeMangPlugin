@@ -1,0 +1,2 @@
+document.addEventListener("DOMContentLoaded",(function(){var e=document.querySelector(".slideshow__slides"),t=document.querySelectorAll(".slideshow__slide"),n=document.querySelector(".slideshow__button--prev"),o=document.querySelector(".slideshow__button--next"),c=0;function d(t){e.style.transform="translateX(".concat(100*-t,"%)")}n.addEventListener("click",(function(){c>0?c--:c=t.length-1,d(c)})),o.addEventListener("click",(function(){c<t.length-1?c++:c=0,d(c)})),d(c)}));
+//# sourceMappingURL=slider.js.map

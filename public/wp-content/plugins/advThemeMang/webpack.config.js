@@ -12,7 +12,7 @@ module.exports = {
   entry: {
     'advThemeMang-compiled': ["./assets/sass/advThemeMang.scss", "./assets/js/advThemeMang.js"],
     form: ["./assets/sass/form.scss", "./assets/js/form.js"],
-    slider: ["./assets/sass/slider.scss", " ./assets/js/slider"]
+    slider: ["./assets/sass/slider.scss", "./assets/js/slider"]
   },
   output: {
     filename: "[name].js",
