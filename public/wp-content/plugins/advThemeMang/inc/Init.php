@@ -14,6 +14,7 @@ class Init
             Base\TaxonomyControler::class,
             Base\WidgetControler::class,
             Base\TestimonialControler::class,
+            Base\CustomTemplatesControler::class,
         ];
     }
     public static function register_services()

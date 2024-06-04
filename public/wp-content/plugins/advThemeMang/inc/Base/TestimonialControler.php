@@ -160,7 +160,7 @@ class TestimonialControler
                 'menu_position'      => null,
                 'menu_icon'          => 'dashicons-testimonial',
                 'supports'           => array( 'title', 'editor' ),
-                'show_in_rest'       => false, // Enable Gutenberg editor
+                'show_in_rest'       => true, // Enable Gutenberg editor
             );
         
             register_post_type( 'testimonial', $args );
