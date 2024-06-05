@@ -42,6 +42,12 @@ class CustomTemplatesControler
         if(!$post){
             return $templates;
         }
+        if(is_front_page()){
+            $file = advThemeMang_PLUGIN_PATH.'page-templates/front-page.php';
+            if(file_exists($file)){
+            return $file;
+        }
+        }
         $template_name = get_post_meta($post->ID, '_wp_page_template', true);
        
 
