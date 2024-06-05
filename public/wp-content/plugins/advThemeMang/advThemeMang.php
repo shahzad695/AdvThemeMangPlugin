@@ -28,9 +28,9 @@ define('advThemeMang_ADMINSETTINGSMANAGER', [
     'taxonomy_manager' => 'Activate Taxonomy Manager',
     'media_widget' => 'Activate Media widget',
     'gallery_manager' => 'Activate Gallery Manager',
-    'testimonial_manager' => 'Activate Tetimonial Manager',
+    'testimonial_manager' => 'Activate Testimonial Manager',
     'login_manager' => 'Activate Login Manager',
-    'membership_manager' => 'Activate Membership Manager',
+    'custom_templates' => 'Activate Custom Templates',
     'chat_manager' => 'Activate Chat Manager',
 
 ]);
